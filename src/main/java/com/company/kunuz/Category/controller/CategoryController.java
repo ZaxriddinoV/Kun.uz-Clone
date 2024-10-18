@@ -1,0 +1,53 @@
+package com.company.kunuz.Category.controller;
+
+import com.company.kunuz.Category.dto.CategoryDTO;
+import com.company.kunuz.Category.dto.CategoryLanguageDTO;
+import com.company.kunuz.Category.entity.CategoryEntity;
+import com.company.kunuz.Category.service.CategoryService;
+import com.company.kunuz.ExceptionHandler.AppBadException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+@RequestMapping("/api/category")
+public class CategoryController {
+    @Autowired
+    private CategoryService categoryService;
+
+    @PostMapping("/")
+    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO category) {
+        CategoryDTO  categoryDTO = categoryService.create(category);
+        return ResponseEntity.ok(categoryDTO);
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<?> updateCategory(@PathVariable int id, @RequestBody CategoryDTO category) {
+        CategoryDTO categoryDTO = categoryService.apdate(id,category);
+        return ResponseEntity.ok(categoryDTO);
+    }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
+        categoryService.delete(id);
+        return ResponseEntity.ok().build();
+    }
+    @GetMapping("/")
+    public ResponseEntity<?> getAllCategory() {
+        List<CategoryEntity> list = categoryService.getAll();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping("/{language}")
+    public ResponseEntity<?> getAllCategoryByLanguage(@PathVariable String language) {
+        List<CategoryLanguageDTO> dtos = categoryService.getAllByLanguage(language);
+        return ResponseEntity.ok(dtos);
+    }
+
+
+    @ExceptionHandler(AppBadException.class)
+    public ResponseEntity<?> handle(AppBadException e){
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
+}

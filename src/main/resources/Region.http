@@ -1,10 +1,31 @@
-###
+###  CREATE REGION
 POST localhost:8080/api/region/
 Content-Type: application/json
 
 {
-  "order_number": 3,
-  "name_uz": "Buxoro",
-  "name_ru": "Бухарская область",
-  "name_en": "Bukhara "
+  "order_number": 1,
+  "name_uz": "Toshkent",
+  "name_ru": "Ташкент",
+  "name_en": "Tashkent"
 }
+
+### GET ALL REGION
+GET localhost:8080/api/region/
+
+### GET LANGUAGE // english, russia, ozbek
+GET localhost:8080/api/region/russia
+
+### PUT REGION GET BY ID
+PUT localhost:8080/api/region/1
+Content-Type: application/json
+
+{
+  "name_uz": "B",
+  "name_ru": "A",
+  "name_en": "B"
+}
+
+### DELETE REGION GET BY ID
+DELETE localhost:8080/api/region/1
+
+

@@ -1,0 +1,14 @@
+### LANGUAGE GET ALL    //english , russia, ozbek
+GET localhost:8080/api/category/russia
+
+
+### POST CATEGORY
+POST localhost:8080/api/category/
+Content-Type: application/json
+
+{
+  "order_number": 1,
+  "name_uz": "Sport",
+  "name_ru": "Спорт",
+  "name_en": "Sport "
+}

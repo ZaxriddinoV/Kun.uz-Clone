@@ -1,0 +1,10 @@
+###
+POST localhost:8080/api/region/
+Content-Type: application/json
+
+{
+  "order_number": 3,
+  "name_uz": "Buxoro",
+  "name_ru": "Бухарская область",
+  "name_en": "Bukhara "
+}

@@ -5,6 +5,7 @@ import com.company.kunuz.Category.dto.CategoryLanguageDTO;
 import com.company.kunuz.Category.entity.CategoryEntity;
 import com.company.kunuz.Category.service.CategoryService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +19,13 @@ public class CategoryController {
     private CategoryService categoryService;
 
     @PostMapping("/")
-    public ResponseEntity<?> addCategory(@RequestBody CategoryDTO category) {
+    public ResponseEntity<?> addCategory(@Valid  @RequestBody CategoryDTO category) {
         CategoryDTO  categoryDTO = categoryService.create(category);
         return ResponseEntity.ok(categoryDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable int id, @RequestBody CategoryDTO category) {
+    public ResponseEntity<?> updateCategory(@PathVariable int id,@Valid @RequestBody CategoryDTO category) {
         CategoryDTO categoryDTO = categoryService.apdate(id,category);
         return ResponseEntity.ok(categoryDTO);
     }

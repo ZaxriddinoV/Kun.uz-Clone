@@ -5,6 +5,7 @@ import com.company.kunuz.Region.Service.RegionService;
 import com.company.kunuz.Region.dto.RegionDTO;
 import com.company.kunuz.Region.dto.RegionLanguageDTO;
 import com.company.kunuz.Region.entity.RegionEntity;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,13 +20,13 @@ public class RegionController {
     private RegionService regionService;
 
     @PostMapping("/")
-    public ResponseEntity<?> addRegion(@RequestBody RegionDTO region) {
+    public ResponseEntity<?> addRegion(@Valid @RequestBody RegionDTO region) {
             RegionDTO regionDTO =  regionService.created(region);
             return ResponseEntity.ok(regionDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateRegion(@PathVariable Integer id, @RequestBody RegionDTO region) {
+    public ResponseEntity<?> updateRegion(@PathVariable Integer id,@Valid @RequestBody RegionDTO region) {
         RegionDTO update = regionService.update(id, region);
         return ResponseEntity.ok(update);
     }

@@ -90,43 +90,28 @@ public class ArticleTypeService {
 
     public List<ArticleLanguageDTO> getAllByLanguage(String language) {
         List<ArticleLanguageDTO> languages = new ArrayList<>();
-        switch (language) {
-            case "english":
-                for (ArticleTypeEntity typeEntity : getAll()) {
-                    ArticleLanguageDTO articleLanguageDTO = new ArticleLanguageDTO();
-                    articleLanguageDTO.setOrder_number(typeEntity.getOrder_number());
+        for (ArticleTypeEntity typeEntity : getAll()) {
+            ArticleLanguageDTO articleLanguageDTO = new ArticleLanguageDTO();
+            articleLanguageDTO.setOrder_number(typeEntity.getOrder_number());
+            articleLanguageDTO.setId(typeEntity.getId());
+
+            switch (language.toLowerCase()) {
+                case "english":
                     articleLanguageDTO.setName(typeEntity.getName_en());
-                    articleLanguageDTO.setId(typeEntity.getId());
-                    languages.add(articleLanguageDTO);
-                }
-                return languages;
-            case "russia":
-                for (ArticleTypeEntity typeEntity : getAll()) {
-                    ArticleLanguageDTO articleLanguageDTO = new ArticleLanguageDTO();
-                    articleLanguageDTO.setOrder_number(typeEntity.getOrder_number());
+                    break;
+                case "russia":
                     articleLanguageDTO.setName(typeEntity.getName_ru());
-                    articleLanguageDTO.setId(typeEntity.getId());
-                    languages.add(articleLanguageDTO);
-                }
-                return languages;
-            case "ozbek":
-                for (ArticleTypeEntity articleType : getAll()) {
-                    ArticleLanguageDTO articleLanguageDTO = new ArticleLanguageDTO();
-                    articleLanguageDTO.setOrder_number(articleType.getOrder_number());
-                    articleLanguageDTO.setName(articleType.getName_uz());
-                    articleLanguageDTO.setId(articleType.getId());
-                    languages.add(articleLanguageDTO);
-                }
-                return languages;
-            default:
-                for (ArticleTypeEntity articleType : getAll()) {
-                    ArticleLanguageDTO articleLanguageDTO = new ArticleLanguageDTO();
-                    articleLanguageDTO.setOrder_number(articleType.getOrder_number());
-                    articleLanguageDTO.setName(articleType.getName_uz());
-                    articleLanguageDTO.setId(articleType.getId());
-                    languages.add(articleLanguageDTO);
-                }
-                return languages;
+                    break;
+                case "ozbek":
+                default:
+                    articleLanguageDTO.setName(typeEntity.getName_uz());
+                    break;
+            }
+
+            languages.add(articleLanguageDTO);
+        }
+
+        return languages;
         }
     }
 

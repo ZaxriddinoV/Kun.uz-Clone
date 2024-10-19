@@ -2,9 +2,9 @@ package com.company.kunuz.ArticleType.controller;
 
 import com.company.kunuz.ArticleType.dto.ArticleLanguageDTO;
 import com.company.kunuz.ArticleType.dto.ArticleTypeDTO;
-import com.company.kunuz.ArticleType.entity.ArticleTypeEntity;
 import com.company.kunuz.ArticleType.service.ArticleTypeService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,13 +18,13 @@ public class ArticleTypeController {
     private ArticleTypeService articleTypeService;
 
     @PostMapping("/")
-    public ResponseEntity<?> addArticle(@RequestBody ArticleTypeDTO dto) {
+    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleTypeDTO dto) {
         ArticleTypeDTO  articleTypeDTO = articleTypeService.create(dto);
         return ResponseEntity.ok(articleTypeDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleTypeDTO articleTypeDTO) {
+    public ResponseEntity<?> updateArticle(@PathVariable int id,@Valid @RequestBody ArticleTypeDTO articleTypeDTO) {
         ArticleTypeDTO typeDTO = articleTypeService.apdate(id,articleTypeDTO);
         return ResponseEntity.ok(typeDTO);
     }

@@ -9,9 +9,14 @@ import com.company.kunuz.Category.dto.CategoryLanguageDTO;
 import com.company.kunuz.Category.entity.CategoryEntity;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,6 +38,26 @@ public class ArticleTypeService {
         ArticleTypeEntity save = articleTypeRepository.save(articleTypeDTO.convertToEntity());
         articleTypeDTO.setId(save.getId());
         return articleTypeDTO;
+    }
+
+    public Page<ArticleTypeDTO> ArticleAll(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
+
+        Page<ArticleTypeEntity> entityList = articleTypeRepository.findByAll(pageRequest);
+        Long total = entityList.getTotalElements();
+        List<ArticleTypeDTO> dtoList = new LinkedList<>();
+        for (ArticleTypeEntity entity : entityList) {
+            ArticleTypeDTO dto = new ArticleTypeDTO();
+            dto.setId(entity.getId());
+            dto.setOrder_number(entity.getOrder_number());
+            dto.setName_uz(entity.getName_uz());
+            dto.setName_en(entity.getName_en());
+            dto.setName_ru(entity.getName_ru());
+            dtoList.add(dto);
+        }
+        PageImpl page1 = new PageImpl<>(dtoList, pageRequest, total);
+
+        return page1;
     }
 
     public ArticleTypeDTO apdate(Integer id, ArticleTypeDTO articleTypeDTO) {

@@ -18,29 +18,29 @@ public class ArticleTypeController {
     private ArticleTypeService articleTypeService;
 
     @PostMapping("/")
-    public ResponseEntity<?> addCategory(@RequestBody ArticleTypeDTO dto) {
+    public ResponseEntity<?> addArticle(@RequestBody ArticleTypeDTO dto) {
         ArticleTypeDTO  articleTypeDTO = articleTypeService.create(dto);
         return ResponseEntity.ok(articleTypeDTO);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> updateCategory(@PathVariable int id, @RequestBody ArticleTypeDTO articleTypeDTO) {
+    public ResponseEntity<?> updateArticle(@PathVariable int id, @RequestBody ArticleTypeDTO articleTypeDTO) {
         ArticleTypeDTO typeDTO = articleTypeService.apdate(id,articleTypeDTO);
         return ResponseEntity.ok(typeDTO);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
+    public ResponseEntity<?> deleteArticle(@PathVariable Integer id) {
         articleTypeService.delete(id);
         return ResponseEntity.ok().build();
     }
     @GetMapping("/")
-    public ResponseEntity<?> getAllCategory() {
-        List<ArticleTypeEntity> list = articleTypeService.getAll();
-        return ResponseEntity.ok(list);
+    private ResponseEntity<?> getAllArticle(@RequestParam(value = "page", defaultValue = "1") int page,
+                                         @RequestParam(value = "size", defaultValue = "10") int size) {
+        return ResponseEntity.ok(articleTypeService.ArticleAll(page - 1, size));
     }
 
     @GetMapping("/{language}")
-    public ResponseEntity<?> getAllCategoryByLanguage(@PathVariable String language) {
+    public ResponseEntity<?> getAllArticleByLanguage(@PathVariable String language) {
         List<ArticleLanguageDTO> dtos = articleTypeService.getAllByLanguage(language);
         return ResponseEntity.ok(dtos);
     }

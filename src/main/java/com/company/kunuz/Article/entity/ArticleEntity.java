@@ -12,6 +12,7 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -23,7 +24,7 @@ import java.util.List;
 public class ArticleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private String id;
+    private UUID id;
 
     @Column(name = "title")
     private String title;
@@ -46,6 +47,7 @@ public class ArticleEntity {
     @Column(name = "publisher_id")
     private Integer publisher_id;
     @Column(name = "status")
+    @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.NotPublished;
     @Column(name = "created_date")
     private LocalDateTime created_date;

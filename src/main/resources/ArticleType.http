@@ -1,9 +1,9 @@
 ### LANGUAGE GET ALL    //en , ru, uz
-GET localhost:8080/api/article/ru
+GET localhost:8080/api/article-type/ru
 
 
 ### POST CATEGORY
-POST localhost:8080/api/article/
+POST localhost:8080/api/article-type/
 Content-Type: application/json
 
 {

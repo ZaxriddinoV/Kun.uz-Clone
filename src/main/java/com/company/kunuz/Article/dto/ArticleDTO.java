@@ -9,6 +9,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -16,7 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @SuperBuilder
 public class ArticleDTO {
-    private String id;
+    private UUID id;
     @NotBlank(message = "title not found")
     private String title;
     @NotBlank(message = "content not found")

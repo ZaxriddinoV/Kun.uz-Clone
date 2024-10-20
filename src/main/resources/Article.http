@@ -1,2 +1,17 @@
 ### CREATE ARTICLE
-POST localhost:8080/
+POST localhost:8080/api/article/
+Content-Type: application/json
+
+{
+  "title": "Ana Xolos",
+  "description": "Test",
+  "content": "bopdi",
+  "image_id": 1,
+  "region_id": 1,
+  "category_id": 1,
+  "articleType": [1]
+}
+
+### PUT PUBLISHER
+PUT localhost:8080/api/article/publisher/246a975b-4f14-44d9-a7a4-1d518bafe70d
+Accept-Post: Published

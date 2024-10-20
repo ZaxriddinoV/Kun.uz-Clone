@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @RestController
 @RequestMapping("/api/article")
 public class ArticleController {
@@ -22,13 +24,13 @@ public class ArticleController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> delete(@PathVariable String id){
+    public ResponseEntity<?> delete(@PathVariable UUID id){
         service.delete(id);
         return ResponseEntity.ok().build();
     }
 
     @PutMapping("/publisher/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestHeader(value = "Accept-Post",defaultValue = "NotPublished" ) ArticleStatus status){
+    public ResponseEntity<?> update(@PathVariable UUID id, @RequestHeader(value = "Accept-Post",defaultValue = "NotPublished" ) ArticleStatus status){
         service.changeStatus(id, status);
         return ResponseEntity.ok().build();
     }

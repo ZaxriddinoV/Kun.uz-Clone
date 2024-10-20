@@ -18,6 +18,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class ArticleService {
@@ -57,13 +58,13 @@ public class ArticleService {
         }else throw new AppBadException("Category or Region not found");
     }
 
-    public void delete(String id) {
+    public void delete(UUID id) {
         int i = repository.changeVisible(id);
         if (i == 0) throw new AppBadException("Failed to delete ");
     }
 
 
-    public void changeStatus(String id, ArticleStatus status) {
+    public void changeStatus(UUID id, ArticleStatus status) {
         if (status.equals(ArticleStatus.Published)) {
             repository.changeStatusPublisher(id);
         }

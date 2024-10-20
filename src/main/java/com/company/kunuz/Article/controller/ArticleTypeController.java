@@ -1,8 +1,8 @@
-package com.company.kunuz.ArticleType.controller;
+package com.company.kunuz.Article.controller;
 
-import com.company.kunuz.ArticleType.dto.ArticleLanguageDTO;
-import com.company.kunuz.ArticleType.dto.ArticleTypeDTO;
-import com.company.kunuz.ArticleType.service.ArticleTypeService;
+import com.company.kunuz.Article.dto.ArticleLanguageDTO;
+import com.company.kunuz.Article.dto.ArticleTypeDTO;
+import com.company.kunuz.Article.service.ArticleTypeService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

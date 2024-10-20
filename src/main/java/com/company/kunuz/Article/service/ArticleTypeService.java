@@ -1,12 +1,9 @@
-package com.company.kunuz.ArticleType.service;
+package com.company.kunuz.Article.service;
 
-import com.company.kunuz.ArticleType.dto.ArticleLanguageDTO;
-import com.company.kunuz.ArticleType.dto.ArticleTypeDTO;
-import com.company.kunuz.ArticleType.entity.ArticleTypeEntity;
-import com.company.kunuz.ArticleType.repository.ArticleTypeRepository;
-import com.company.kunuz.Category.dto.CategoryDTO;
-import com.company.kunuz.Category.dto.CategoryLanguageDTO;
-import com.company.kunuz.Category.entity.CategoryEntity;
+import com.company.kunuz.Article.dto.ArticleLanguageDTO;
+import com.company.kunuz.Article.dto.ArticleTypeDTO;
+import com.company.kunuz.Article.entity.ArticleTypeEntity;
+import com.company.kunuz.Article.repository.ArticleTypeRepository;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -96,13 +93,13 @@ public class ArticleTypeService {
             articleLanguageDTO.setId(typeEntity.getId());
 
             switch (language.toLowerCase()) {
-                case "english":
+                case "en":
                     articleLanguageDTO.setName(typeEntity.getName_en());
                     break;
-                case "russia":
+                case "ru":
                     articleLanguageDTO.setName(typeEntity.getName_ru());
                     break;
-                case "ozbek":
+                case "uz":
                 default:
                     articleLanguageDTO.setName(typeEntity.getName_uz());
                     break;
@@ -112,7 +109,7 @@ public class ArticleTypeService {
         }
 
         return languages;
-        }
+
     }
 
 }

@@ -1,4 +1,4 @@
-package com.company.kunuz.ArticleType.dto;
+package com.company.kunuz.Article.dto;
 
 import lombok.Getter;
 import lombok.Setter;

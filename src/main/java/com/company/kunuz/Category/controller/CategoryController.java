@@ -45,7 +45,11 @@ public class CategoryController {
         List<CategoryLanguageDTO> dtos = categoryService.getAllByLanguage(language);
         return ResponseEntity.ok(dtos);
     }
-
+    @GetMapping("/language")
+    public ResponseEntity<?> getAllCategoryByLanguageHeadr(@RequestHeader(value = "Accept-Language",defaultValue = "ozbek") String language) {
+        List<CategoryLanguageDTO> dtos = categoryService.getAllByLanguage(language);
+        return ResponseEntity.ok(dtos);
+    }
 
     @ExceptionHandler(AppBadException.class)
     public ResponseEntity<?> handle(AppBadException e){

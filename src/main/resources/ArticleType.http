@@ -1,5 +1,5 @@
-### LANGUAGE GET ALL    //english , russia, ozbek
-GET localhost:8080/api/article/russia
+### LANGUAGE GET ALL    //en , ru, uz
+GET localhost:8080/api/article/ru
 
 
 ### POST CATEGORY
@@ -14,4 +14,5 @@ Content-Type: application/json
 }
 
 ### GET ALL
-GET localhost:8080/api/article/page=1&size=10
+GET localhost:8080/api/category/language
+Accept-Language: ru

@@ -1,8 +1,6 @@
-package com.company.kunuz.ArticleType.entity;
+package com.company.kunuz.Article.entity;
 
-import com.company.kunuz.ArticleType.dto.ArticleTypeDTO;
-import com.company.kunuz.Category.dto.CategoryDTO;
-import com.company.kunuz.Region.entity.RegionEntity;
+import com.company.kunuz.Article.dto.ArticleTypeDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

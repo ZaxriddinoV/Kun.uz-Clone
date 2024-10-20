@@ -1,6 +1,6 @@
-package com.company.kunuz.ArticleType.repository;
+package com.company.kunuz.Article.repository;
 
-import com.company.kunuz.ArticleType.entity.ArticleTypeEntity;
+import com.company.kunuz.Article.entity.ArticleTypeEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

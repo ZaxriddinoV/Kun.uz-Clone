@@ -1,7 +1,6 @@
-package com.company.kunuz.ArticleType.dto;
+package com.company.kunuz.Article.dto;
 
-import com.company.kunuz.ArticleType.entity.ArticleTypeEntity;
-import com.company.kunuz.Category.entity.CategoryEntity;
+import com.company.kunuz.Article.entity.ArticleTypeEntity;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;

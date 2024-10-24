@@ -68,6 +68,7 @@ public class ProfileService {
         emailSendingService.sendSimpleMessage(dto.getEmail(), "Complite Registration", sb.toString());
 
         emailSendingService.sendMimeMessage(dto.getEmail(), "Tasdiqlash", sb.toString());
+
         emailHistoryService.addEmailHistory(dto.getEmail(),sb.toString(),entity.getCreated_date());
         return "Email sent";
     }

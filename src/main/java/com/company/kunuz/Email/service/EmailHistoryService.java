@@ -6,9 +6,9 @@ import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.Formatter;
 import java.util.List;
 
 @Service
@@ -19,6 +19,18 @@ public class EmailHistoryService {
 
 
     public void addEmailHistory(String email, String message, LocalDateTime createdDate) {
+        List<EmailHistoryEntity> byEmail = emailHistoryRepository.findByEmail(email);
+
+        if (byEmail.size() >= 4) {
+            LocalDateTime date0 = byEmail.get(0).getCreatedData();
+            LocalDateTime date3 = byEmail.get(3).getCreatedData();
+
+            Duration duration = Duration.between(date0, date3);
+
+            if (duration.abs().getSeconds() <= 60) {
+                throw new RuntimeException("The number of requests increased");
+            }
+        }
         EmailHistoryEntity entity = new EmailHistoryEntity();
         entity.setEmail(email);
         entity.setMessage(message);
@@ -26,8 +38,8 @@ public class EmailHistoryService {
         emailHistoryRepository.save(entity);
     }
 
-    public EmailHistoryEntity getByEmail(String email) {
-        EmailHistoryEntity byEmail = emailHistoryRepository.findByEmail(email);
+    public List<EmailHistoryEntity> getByEmail(String email) {
+        List<EmailHistoryEntity> byEmail = emailHistoryRepository.findByEmail(email);
         if (byEmail == null) {
             throw new AppBadException("Email not found");
         }
@@ -42,5 +54,6 @@ public class EmailHistoryService {
         return allByCreatedDate;
 
     }
+
 
 }

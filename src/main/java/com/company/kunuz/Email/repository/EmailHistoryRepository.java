@@ -14,7 +14,7 @@ import java.util.List;
 @Repository
 public interface EmailHistoryRepository extends JpaRepository<EmailHistoryEntity, Integer> {
 
-    EmailHistoryEntity findByEmail(String email);
+    List<EmailHistoryEntity> findByEmail(String email);
 
     @Query("SELECT e FROM EmailHistoryEntity e WHERE DATE(e.createdData) = :date")
     List<EmailHistoryEntity> findAllByCreatedDate(@Param("date") LocalDateTime date);

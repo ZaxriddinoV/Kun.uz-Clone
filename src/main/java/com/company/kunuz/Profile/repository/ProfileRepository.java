@@ -9,6 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 public interface ProfileRepository extends JpaRepository<ProfileEntity,Integer>, PagingAndSortingRepository<ProfileEntity,Integer> {
 
     boolean existsByEmail(String email);
@@ -21,4 +23,8 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity,Integer>,
     @Transactional
     @Query("UPDATE ProfileEntity p SET p.visible = false WHERE p.id=?1 ")
     int deleted(Integer id);
+
+    Optional<ProfileEntity> findByIdAndVisibleTrue(Integer id);
+
+    Optional<ProfileEntity> findByEmailAndVisibleTrue(String email);
 }

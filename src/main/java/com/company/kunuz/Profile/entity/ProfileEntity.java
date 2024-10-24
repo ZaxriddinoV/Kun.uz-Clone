@@ -28,12 +28,14 @@ public class ProfileEntity {
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name = "email", unique = true)
+    @Column(name = "email")
     private String email;
     @Column(name = "password")
     private String password;
+    @Enumerated(EnumType.STRING)
     @Column(name = "status")
     private ProfileStatus status = ProfileStatus.ACTIVE;
+    @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private ProfileRole role;
     @Column(name = "visible")

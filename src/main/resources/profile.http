@@ -1,18 +1,19 @@
 ### CREATE PROFILE
-POST localhost:8080/api/profile/
-Content-Type: application/json
 
-{
-  "name": "Ali",
-  "surname": "Aliyev",
-  "password": "12456879",
-  "status": "ACTIVE",
-  "role": "MODERATOR",
-  "email": "test@gmail.com"
-}
 
 ### GET All
 GET localhost:8080/api/profile/?page=1&size=10
 
 ### DELETED Visible false
 DELETE localhost:8080/api/profile/1
+
+###
+POST localhost:8080/api/auth/registration
+Content-Type: application/json
+
+{
+  "email": "Zaxriddinov1707@gmail.com",
+  "surname": "Zaxriddinov",
+  "password": "123456",
+  "name": "Bobur"
+}

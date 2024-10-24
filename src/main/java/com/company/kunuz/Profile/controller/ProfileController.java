@@ -14,11 +14,11 @@ public class ProfileController {
     @Autowired
     private ProfileService service;
 
-    @PostMapping("/")
-    public ResponseEntity<?> create(@RequestBody ProfileDTO profile) {
-        ProfileDTO profileDTO = service.createProfile(profile);
-        return ResponseEntity.ok(profileDTO);
-    }
+//    @PostMapping("/")
+//    public ResponseEntity<?> create(@RequestBody ProfileDTO profile) {
+//        ProfileDTO profileDTO = service.createProfile(profile);
+//        return ResponseEntity.ok(profileDTO);
+//    }
 
     @GetMapping("/")
     public ResponseEntity<?> getAllProfile(@RequestParam(value = "page", defaultValue = "1") int page,

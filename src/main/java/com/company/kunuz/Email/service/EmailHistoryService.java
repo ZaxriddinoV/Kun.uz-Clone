@@ -22,13 +22,13 @@ public class EmailHistoryService {
         List<EmailHistoryEntity> byEmail = emailHistoryRepository.findByEmail(email);
 
         if (byEmail.size() >= 4) {
-            LocalDateTime date0 = byEmail.get(0).getCreatedData();
-            LocalDateTime date3 = byEmail.get(3).getCreatedData();
+            LocalDateTime date0 = byEmail.get(byEmail.size() - 1).getCreatedData();
+            LocalDateTime date3 = byEmail.get(byEmail.size() - 4).getCreatedData();
 
             Duration duration = Duration.between(date0, date3);
 
             if (duration.abs().getSeconds() <= 60) {
-                throw new RuntimeException("The number of requests increased");
+                throw new AppBadException("The number of requests increased");
             }
         }
         EmailHistoryEntity entity = new EmailHistoryEntity();

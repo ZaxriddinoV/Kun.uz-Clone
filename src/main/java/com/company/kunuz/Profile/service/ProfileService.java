@@ -43,10 +43,10 @@ public class ProfileService {
         }
     }*/
     public String registration(RegistrationDTO dto) {
-        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
-        if(optional.isPresent()){
-            throw  new AppBadException("Email already exists");
-        }
+//        Optional<ProfileEntity> optional = profileRepository.findByEmailAndVisibleTrue(dto.getEmail());
+//        if(optional.isPresent()){
+//            throw  new AppBadException("Email already exists");
+//        }
 
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());
@@ -69,7 +69,7 @@ public class ProfileService {
 
         emailSendingService.sendMimeMessage(dto.getEmail(), "Tasdiqlash", sb.toString());
 
-        emailHistoryService.addEmailHistory(dto.getEmail(),sb.toString(),entity.getCreated_date());
+        emailHistoryService.addEmailHistory(dto.getEmail(),"Tasdiqlash",entity.getCreated_date());
         return "Email sent";
     }
 

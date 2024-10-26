@@ -25,7 +25,7 @@ public class ProfileDTO {
     @NotBlank(message = "Surname not found")
     private String surname;
     @NotBlank(message = "Email not found")
-    private String email;
+    private String username;
     @NotBlank(message = "Password not found")
     private String password;
     private ProfileStatus status;
@@ -38,7 +38,7 @@ public class ProfileDTO {
                 .surname(this.getSurname())
                 .password(this.getPassword())
                 .role(this.getRole())
-                .email(this.getEmail())
+                .email(this.getUsername())
                 .status(this.getStatus())
                 .created_date(LocalDateTime.now())
                 .visible(Boolean.TRUE)

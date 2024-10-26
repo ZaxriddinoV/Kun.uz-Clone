@@ -1,4 +1,4 @@
-package com.company.kunuz.Email.entiy;
+package com.company.kunuz.UsernameHistory.entiy;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,12 +12,13 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Entity
-public class EmailHistoryEntity {
+public class SmsHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    private String message;
-    private String email;
+    private Integer code;
+    private String phone;
     private LocalDateTime createdData;
+    private Integer attempts;
 
 }

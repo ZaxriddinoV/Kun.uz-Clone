@@ -1,7 +1,7 @@
-package com.company.kunuz.Email.controller;
+package com.company.kunuz.UsernameHistory.controller;
 
-import com.company.kunuz.Email.entiy.EmailHistoryEntity;
-import com.company.kunuz.Email.service.EmailHistoryService;
+import com.company.kunuz.UsernameHistory.entiy.EmailHistoryEntity;
+import com.company.kunuz.UsernameHistory.service.EmailHistoryService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

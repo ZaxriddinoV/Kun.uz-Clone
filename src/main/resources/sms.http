@@ -1,0 +1,24 @@
+## login
+POST notify.eskiz.uz/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "...",
+  "password": "vJx6ESXF1j"
+}
+
+
+
+### send SMS
+POST notify.eskiz.uz/api/message/sms/send
+Content-Type: application/json
+Authorization: Bearer sasa.dasdas.asd-asda
+
+{
+  "mobile_phone": "998940091704",
+  "message": "<#>kitabu.uz partali. Ro'yxatdan o'tish uchun tasdiqlash kodi: 12345",
+  "from": "4546"
+}
+
+
+###

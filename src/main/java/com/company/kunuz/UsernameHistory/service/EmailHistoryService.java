@@ -1,7 +1,7 @@
-package com.company.kunuz.Email.service;
+package com.company.kunuz.UsernameHistory.service;
 
-import com.company.kunuz.Email.entiy.EmailHistoryEntity;
-import com.company.kunuz.Email.repository.EmailHistoryRepository;
+import com.company.kunuz.UsernameHistory.entiy.EmailHistoryEntity;
+import com.company.kunuz.UsernameHistory.repository.EmailHistoryRepository;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,7 +24,6 @@ public class EmailHistoryService {
         if (byEmail.size() >= 4) {
             LocalDateTime date0 = byEmail.get(byEmail.size() - 1).getCreatedData();
             LocalDateTime date3 = byEmail.get(byEmail.size() - 4).getCreatedData();
-
             Duration duration = Duration.between(date0, date3);
 
             if (duration.abs().getSeconds() <= 60) {

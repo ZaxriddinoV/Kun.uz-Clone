@@ -1,7 +1,6 @@
 package com.company.kunuz.Profile.controller;
 
 import com.company.kunuz.ExceptionHandler.AppBadException;
-import com.company.kunuz.Profile.dto.ProfileDTO;
 import com.company.kunuz.Profile.service.ProfileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

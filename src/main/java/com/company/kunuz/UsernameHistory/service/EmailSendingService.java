@@ -1,4 +1,4 @@
-package com.company.kunuz.Email.service;
+package com.company.kunuz.UsernameHistory.service;
 
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;

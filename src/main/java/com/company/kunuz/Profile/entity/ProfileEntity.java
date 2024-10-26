@@ -28,8 +28,8 @@ public class ProfileEntity {
     private String name;
     @Column(name = "surname")
     private String surname;
-    @Column(name = "email")
-    private String email;
+    @Column(name = "username")
+    private String username;
     @Column(name = "password")
     private String password;
     @Enumerated(EnumType.STRING)
@@ -51,7 +51,7 @@ public class ProfileEntity {
                 .id(this.getId())
                 .name(this.getName())
                 .surname(this.getSurname())
-                .email(this.getEmail())
+                .username(this.getUsername())
                 .password(this.getPassword())
                 .status(this.getStatus())
                 .role(this.getRole()).build();

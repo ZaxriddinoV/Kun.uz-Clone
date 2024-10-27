@@ -30,6 +30,7 @@ public class ProfileDTO {
     private String password;
     private ProfileStatus status;
     private ProfileRole role;
+    private String JwtToken;
 
 
     public ProfileEntity mapToEntity() {
@@ -38,7 +39,7 @@ public class ProfileDTO {
                 .surname(this.getSurname())
                 .password(this.getPassword())
                 .role(this.getRole())
-                .email(this.getUsername())
+                .username(this.getUsername())
                 .status(this.getStatus())
                 .created_date(LocalDateTime.now())
                 .visible(Boolean.TRUE)

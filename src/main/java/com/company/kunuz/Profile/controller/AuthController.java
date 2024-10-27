@@ -1,13 +1,17 @@
 package com.company.kunuz.Profile.controller;
 
 import com.company.kunuz.ExceptionHandler.AppBadException;
+import com.company.kunuz.Profile.dto.AuthDTO;
 import com.company.kunuz.Profile.dto.RegistrationDTO;
+import com.company.kunuz.Profile.service.AuthServise;
 import com.company.kunuz.Profile.service.ProfileService;
 import com.company.kunuz.UsernameHistory.dto.SmsConfirmDTO;
-import lombok.Getter;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -15,10 +19,10 @@ public class AuthController {
 
 
     @Autowired
-    private ProfileService authService;
+    private AuthServise authService;
 
     @PostMapping("/registration")
-    public ResponseEntity<String> registration(@RequestBody RegistrationDTO dto){
+    public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDTO dto){
         return ResponseEntity.ok(authService.registration(dto));
     }
 
@@ -28,12 +32,20 @@ public class AuthController {
     }
 
     @PostMapping("/registration/confirm/code")
-    public ResponseEntity<?> registrationConfirmCode(@RequestBody SmsConfirmDTO dto){
-        authService.smsConfirm(dto);
+    public ResponseEntity<?> registrationConfirmCode(@Valid @RequestBody SmsConfirmDTO dto){
+
+        authService.smsConfirm(dto, LocalDateTime.now());
+        return ResponseEntity.ok().build();
+    }
+    @PostMapping("/login")
+    public ResponseEntity<?> login(@Valid @RequestBody AuthDTO dto){
+        authService.login(dto);
         return ResponseEntity.ok().build();
     }
 
-    @ExceptionHandler(AppBadException.class)
+
+
+    @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
     public ResponseEntity<?> handle(AppBadException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }

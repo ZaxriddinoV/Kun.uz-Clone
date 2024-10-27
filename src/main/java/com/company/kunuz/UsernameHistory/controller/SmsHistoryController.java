@@ -17,16 +17,16 @@ public class SmsHistoryController {
     @Autowired
     SmsHistoryService smsHistoryService;
 
-    @GetMapping("/phone/{number}")
-    public ResponseEntity<?> getEmailHistoryService(@RequestParam(value = "number") String phone) {
-        List<SmsHistoryEntity> entity =  smsHistoryService.getByPhone(phone);
-        return ResponseEntity.ok(entity);
-    }
+//    @GetMapping("/phone/{number}")
+//    public ResponseEntity<?> getEmailHistoryService(@RequestParam(value = "number") String phone) {
+//        List<SmsHistoryEntity> entity =  smsHistoryService.;
+//        return ResponseEntity.ok(entity);
+//    }
 
-    @GetMapping("/date/{date}")
-    public ResponseEntity<?> getEmailHistoryService(@RequestParam LocalDate date) {
-        return ResponseEntity.ok(smsHistoryService.getAllGiven(date));
-    }
+//    @GetMapping("/date/{date}")
+//    public ResponseEntity<?> getEmailHistoryService(@RequestParam LocalDate date) {
+//        return ResponseEntity.ok(smsHistoryService.getAllGiven(date));
+//    }
 
     @ExceptionHandler(AppBadException.class)
     public ResponseEntity<?> handle(AppBadException e){

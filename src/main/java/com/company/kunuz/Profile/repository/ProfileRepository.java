@@ -13,7 +13,6 @@ import java.util.Optional;
 
 public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer>, PagingAndSortingRepository<ProfileEntity, Integer> {
 
-    boolean existsByEmail(String email);
 
 
     @Query("FROM ProfileEntity p WHERE p.visible = true ")
@@ -25,7 +24,7 @@ public interface ProfileRepository extends JpaRepository<ProfileEntity, Integer>
     int deleted(Integer id);
 
     @Query("SELECT CASE WHEN COUNT(a) > 0 THEN TRUE ELSE FALSE END FROM ProfileEntity a WHERE a.username = ?1 AND a.status = 'IN_REGISTRATION'")
-    boolean existsByUsername(String username);
+    Boolean existsByUsername(String username);
 
     Optional<ProfileEntity> findByIdAndVisibleTrue(Integer id);
 

@@ -13,7 +13,7 @@ public interface SmsHistoryRepository extends JpaRepository<SmsHistoryEntity,Int
     @Query("SELECT s FROM SmsHistoryEntity s WHERE DATE(s.createdData) = :date")
     List<EmailHistoryEntity> findAllByCreatedDate(@Param("date") LocalDateTime date);
 
-    @Query("SELECT c.code FROM SmsHistoryEntity c WHERE c.phone = ?1 ORDER BY c.createdData DESC")
-    Integer findLatestCodeByPhone(String phone);
+    @Query("SELECT c FROM SmsHistoryEntity c WHERE c.phone = ?1 ORDER BY c.createdData DESC")
+    SmsHistoryEntity findLatestCodeByPhone(String phone);
 
 }

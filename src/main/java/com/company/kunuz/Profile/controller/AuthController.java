@@ -4,7 +4,6 @@ import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.AuthDTO;
 import com.company.kunuz.Profile.dto.RegistrationDTO;
 import com.company.kunuz.Profile.service.AuthServise;
-import com.company.kunuz.Profile.service.ProfileService;
 import com.company.kunuz.UsernameHistory.dto.SmsConfirmDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,20 +33,16 @@ public class AuthController {
     @PostMapping("/registration/confirm/code")
     public ResponseEntity<?> registrationConfirmCode(@Valid @RequestBody SmsConfirmDTO dto){
 
-        authService.smsConfirm(dto, LocalDateTime.now());
-        return ResponseEntity.ok().build();
+        String s = authService.smsConfirm(dto, LocalDateTime.now());
+        return ResponseEntity.ok().body(s);
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthDTO dto){
         authService.login(dto);
         return ResponseEntity.ok().build();
     }
-
-
-
     @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
     public ResponseEntity<?> handle(AppBadException e){
         return ResponseEntity.badRequest().body(e.getMessage());
     }
-
 }

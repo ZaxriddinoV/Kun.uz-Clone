@@ -5,6 +5,7 @@ import com.company.kunuz.Profile.dto.AuthDTO;
 import com.company.kunuz.Profile.dto.ProfileDTO;
 import com.company.kunuz.Profile.dto.RegistrationDTO;
 import com.company.kunuz.Profile.entity.ProfileEntity;
+import com.company.kunuz.Profile.enums.ProfileRole;
 import com.company.kunuz.Profile.enums.ProfileStatus;
 import com.company.kunuz.Profile.enums.UsernameEnum;
 import com.company.kunuz.Profile.repository.ProfileRepository;
@@ -52,6 +53,7 @@ public class AuthServise {
             case PHONE_NUMBER:
                 ProfileEntity profilePhone = registerConvert(dto);
                 Integer code = smsService.sendRegistrationSms(dto.getUsername());
+                System.out.println("Code == " + code);
                 historyService.smsHistory(profilePhone.getUsername(), code, profilePhone.getCreated_date());
                 return "Confirm sent sms";
             case EMAIL:
@@ -78,6 +80,7 @@ public class AuthServise {
         entity.setUsername(dto.getUsername());
         entity.setPassword(MD5Util.md5(dto.getPassword()));
         entity.setSurname(dto.getSurname());
+        entity.setRole(ProfileRole.USER);
         entity.setStatus(ProfileStatus.IN_REGISTRATION);
         entity.setVisible(Boolean.TRUE);
         entity.setCreated_date(LocalDateTime.now());
@@ -116,14 +119,6 @@ public class AuthServise {
         } else {
             throw new AppBadException("The phone number could not be found or it has already been registered");
         }
-        // 1. findByPhone()
-        // 2. check IN_REGISTRATION
-
-        // check()
-        // 3. check code is correct
-        // 4. sms expiredTime
-        // 5. attempt count  (10,000 - 99,999)
-        // change status and update
     }
 
     public ProfileDTO login(AuthDTO dto) {

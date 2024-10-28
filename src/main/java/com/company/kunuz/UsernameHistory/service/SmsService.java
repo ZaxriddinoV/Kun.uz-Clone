@@ -1,20 +1,32 @@
 package com.company.kunuz.UsernameHistory.service;
 
+import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.UsernameHistory.dto.SmsAuthResponseDTO;
+import com.company.kunuz.UsernameHistory.entiy.SmsTokenEntity;
+import com.company.kunuz.UsernameHistory.repository.SmsHistoryRepository;
+import com.company.kunuz.UsernameHistory.repository.SmsTokenRepository;
 import com.company.kunuz.util.RandomUtil;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import okhttp3.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Service
 public class SmsService {
+    @Autowired
+    SmsHistoryRepository smsHistoryRepository;
+    @Autowired
+    SmsTokenRepository smsTokenRepository;
 
     public Integer sendRegistrationSms(String phoneNumber) {
         int code = RandomUtil.getRandomInt();
-        String message = "<#>kitabu.uz partali. Ro'yxatdan o'tish uchun tasdiqlash kodi: " + code;
+            String message = "This is test from Eskiz";
         sendSms(phoneNumber, message);
         return code;
     }
@@ -22,8 +34,10 @@ public class SmsService {
 
     private void sendSms(String phone, String message) {
         try {
-            // TODO limit 3
-            // TODO save
+            Long smsCount = smsHistoryRepository.getSmsCount(phone, LocalDateTime.now().minusMinutes(1), LocalDateTime.now());
+            if (smsCount >= 3) {
+                throw new AppBadException("Limit reached");
+            }
 
             RequestBody formBody = new FormBody.Builder()
                     .add("mobile_phone", phone)
@@ -51,16 +65,25 @@ public class SmsService {
     }
 
     private String getToken() {
-        // repository
-        // TODO
-        return "eyVCJ9.aass.a2QB";
+        LocalDate localDate = LocalDate.now();
+        Optional<SmsTokenEntity> byId = smsTokenRepository.findById(1);
+        if (byId.isPresent()) {
+            SmsTokenEntity smsTokenEntity = byId.get();
+            if (smsTokenEntity.getCreateAt().plusDays(29).isBefore(localDate)) {
+                String newToken = getNewToken();
+                smsTokenEntity.setToken(newToken);
+                smsTokenEntity.setCreateAt(localDate);
+                smsTokenRepository.save(smsTokenEntity);
+                return newToken;
+            } else {return smsTokenEntity.getToken();}
+        } else {return getNewToken();}
     }
 
     private String getNewToken() {
         try {
             RequestBody formBody = new FormBody.Builder()
-                    .add("email", "emailfromsdasdasdasd ")
-                    .add("password", "13123123123")
+                    .add("email", "Zaxriddinov1707@gmail.com")
+                    .add("password", "zpEMWldp8DjzGGBoEz8vZvNPxyb8IuisGMVYllVN")
                     .add("from", "4546")
                     .build();
 
@@ -78,6 +101,10 @@ public class SmsService {
 
             ObjectMapper mapper = new ObjectMapper();
             SmsAuthResponseDTO result = mapper.readValue(json, SmsAuthResponseDTO.class);
+            SmsTokenEntity smsTokenEntity = new SmsTokenEntity();
+            smsTokenEntity.setToken(result.getData().getToken());
+            smsTokenEntity.setCreateAt(LocalDate.now());
+            smsTokenRepository.save(smsTokenEntity);
             return result.getData().getToken();
         } catch (IOException e) {
             e.printStackTrace();

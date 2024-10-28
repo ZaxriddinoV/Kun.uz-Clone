@@ -16,4 +16,6 @@ public interface SmsHistoryRepository extends JpaRepository<SmsHistoryEntity,Int
     @Query("SELECT c FROM SmsHistoryEntity c WHERE c.phone = ?1 ORDER BY c.createdData DESC")
     SmsHistoryEntity findLatestCodeByPhone(String phone);
 
+    @Query("Select count (s) from SmsHistoryEntity s where s.phone = ?1 and s.createdData between ?2 and ?3 ")
+    Long getSmsCount(String phone, LocalDateTime from, LocalDateTime to);
 }

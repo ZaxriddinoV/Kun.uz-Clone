@@ -99,7 +99,8 @@ public class SmsService {
             Response response = call.execute();
             String json = response.body().string();
 
-            ObjectMapper mapper = new ObjectMapper();
+            ObjectMapper mapper = new ObjectMapper();.
+
             SmsAuthResponseDTO result = mapper.readValue(json, SmsAuthResponseDTO.class);
             SmsTokenEntity smsTokenEntity = new SmsTokenEntity();
             smsTokenEntity.setToken(result.getData().getToken());

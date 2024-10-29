@@ -45,7 +45,7 @@ public class ArticleTypeController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArticle(@PathVariable Integer id,
-                                           @RequestHeader("Authorization") String token) {
+                                               @RequestHeader("Authorization") String token) {
         JwtDTO dto = JwtUtil.decode(token.substring(7));
         if (dto.getRole().equals(ProfileRole.ADMIN)) {
             articleTypeService.delete(id);

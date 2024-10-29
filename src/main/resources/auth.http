@@ -23,7 +23,7 @@ POST localhost:8080/api/auth/registration
 Content-Type: application/json
 
 {
-  "username": "+998997485000",
+  "username": "+",
   "surname": "Zakhriddinov",
   "password": "654321",
   "name": "Mehkriddin"

@@ -2,6 +2,7 @@ package com.company.kunuz.Profile.controller;
 
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.AuthDTO;
+import com.company.kunuz.Profile.dto.ProfileDTO;
 import com.company.kunuz.Profile.dto.RegistrationDTO;
 import com.company.kunuz.Profile.service.AuthService;
 import com.company.kunuz.UsernameHistory.dto.SmsConfirmDTO;
@@ -38,8 +39,8 @@ public class AuthController {
     }
     @PostMapping("/login")
     public ResponseEntity<?> login(@Valid @RequestBody AuthDTO dto){
-        authService.login(dto);
-        return ResponseEntity.ok().build();
+        ProfileDTO login = authService.login(dto);
+        return ResponseEntity.ok().body(login);
     }
     @ExceptionHandler({AppBadException.class, IllegalArgumentException.class})
     public ResponseEntity<?> handle(AppBadException e){

@@ -43,6 +43,6 @@ POST localhost:8080/api/auth/login
 Content-Type: application/json
 
 {
-  "username": "+",
+  "username": "+998997485000",
   "password": "654321"
 }

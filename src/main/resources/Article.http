@@ -15,3 +15,7 @@ Content-Type: application/json
 ### PUT PUBLISHER
 PUT localhost:8080/api/article/publisher/246a975b-4f14-44d9-a7a4-1d518bafe70d
 Accept-Post: Published
+
+###
+GET localhost:8080/api/profile/
+Authorization: Bearer eyJhbGciOiJIUzI1NiJ9.eyJyb2xlIjoiVVNFUiIsInN1YiI6Iis5OTg5OTc0ODUwMDAiLCJpYXQiOjE3MzAyMDEyNTQsImV4cCI6MTczMDI4NzY1NH0.mf62cXsIP9-E7kSkVyt0Reta8Nv0WxI_W2zFzW8vl2s

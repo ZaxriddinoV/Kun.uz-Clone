@@ -3,7 +3,7 @@ package com.company.kunuz.Profile.controller;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.AuthDTO;
 import com.company.kunuz.Profile.dto.RegistrationDTO;
-import com.company.kunuz.Profile.service.AuthServise;
+import com.company.kunuz.Profile.service.AuthService;
 import com.company.kunuz.UsernameHistory.dto.SmsConfirmDTO;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class AuthController {
 
 
     @Autowired
-    private AuthServise authService;
+    private AuthService authService;
 
     @PostMapping("/registration")
     public ResponseEntity<String> registration(@Valid @RequestBody RegistrationDTO dto){

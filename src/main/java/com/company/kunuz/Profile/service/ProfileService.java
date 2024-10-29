@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+
 import java.util.LinkedList;
 import java.util.List;
 
@@ -33,12 +34,13 @@ public class ProfileService {
         boolean b = profileRepository.existsByUsername(profile.getUsername());
         if (b) {
             throw new AppBadException("Email already exists");
-        }else {
+        } else {
             ProfileEntity save = profileRepository.save(profile.mapToEntity());
             profile.setId(save.getId());
             return profile;
         }
     }
+
     public Page<ProfileEntity> profileAll(int page, int size) {
         PageRequest pageRequest = PageRequest.of(page, size, Sort.by("created_date").descending());
         Page<ProfileEntity> entityList = profileRepository.findAllPage(pageRequest);
@@ -51,6 +53,7 @@ public class ProfileService {
 
         return page1;
     }
+
     public Integer deleted(Integer id) {
         return profileRepository.deleted(id);
     }

@@ -27,7 +27,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
-public class AuthServise {
+public class AuthService {
 
     @Autowired
     ProfileRepository profileRepository;
@@ -74,6 +74,7 @@ public class AuthServise {
         }
         throw new AppBadException("Invalid username");
     }
+
     public ProfileEntity registerConvert(RegistrationDTO dto) {
         ProfileEntity entity = new ProfileEntity();
         entity.setName(dto.getName());

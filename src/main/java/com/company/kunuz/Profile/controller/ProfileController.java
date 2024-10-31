@@ -10,6 +10,8 @@ import com.company.kunuz.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -19,6 +21,7 @@ public class ProfileController {
     @Autowired
     private ProfileService service;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<ProfileDTO> addProfile(@RequestBody @Valid ProfileDTO requestDTO,
                                                  @RequestHeader("Authorization") String token) {
@@ -31,6 +34,7 @@ public class ProfileController {
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/")
     public ResponseEntity<?> getAllProfile(@RequestParam(value = "page", defaultValue = "1") int page,
                                            @RequestParam(value = "size", defaultValue = "10") int size,
@@ -44,6 +48,7 @@ public class ProfileController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public ResponseEntity<?> deleteProfile(@PathVariable("id") Integer id,
                                            @RequestHeader("Authorization") String token) {
         JwtDTO dto = JwtUtil.decode(token.substring(7));

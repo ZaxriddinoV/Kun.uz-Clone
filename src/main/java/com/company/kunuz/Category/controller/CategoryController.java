@@ -8,6 +8,7 @@ import com.company.kunuz.ExceptionHandler.AppBadException;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,17 +19,21 @@ public class CategoryController {
     @Autowired
     private CategoryService categoryService;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<?> addCategory(@Valid  @RequestBody CategoryDTO category) {
         CategoryDTO  categoryDTO = categoryService.create(category);
         return ResponseEntity.ok(categoryDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCategory(@PathVariable int id,@Valid @RequestBody CategoryDTO category) {
         CategoryDTO categoryDTO = categoryService.apdate(id,category);
         return ResponseEntity.ok(categoryDTO);
     }
+
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Integer id) {
         categoryService.delete(id);

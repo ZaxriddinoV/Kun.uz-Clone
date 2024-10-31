@@ -10,6 +10,7 @@ import com.company.kunuz.util.JwtUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,12 +21,14 @@ public class ArticleTypeController {
     @Autowired
     private ArticleTypeService articleTypeService;
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PostMapping("/")
     public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleTypeDTO articleTypeDTO1) {
         ArticleTypeDTO articleTypeDTO = articleTypeService.create(articleTypeDTO1);
         return ResponseEntity.ok(articleTypeDTO);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @PutMapping("/{id}")
     public ResponseEntity<?> updateArticle(@PathVariable int id, @Valid @RequestBody ArticleTypeDTO articleTypeDTO,
                                            @RequestHeader("Authorization") String token ){
@@ -36,6 +39,7 @@ public class ArticleTypeController {
         }else {return ResponseEntity.status(403).build();}
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteArticle(@PathVariable Integer id,
                                                @RequestHeader("Authorization") String token) {

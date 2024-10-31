@@ -1,6 +1,7 @@
 package com.company.kunuz.Profile.service;
 
 
+import com.company.kunuz.Profile.dto.UpdateProfileDetailDTO;
 import com.company.kunuz.UsernameHistory.repository.SmsHistoryRepository;
 import com.company.kunuz.UsernameHistory.service.SmsHistoryService;
 import com.company.kunuz.UsernameHistory.service.SmsService;
@@ -8,6 +9,8 @@ import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.ProfileDTO;
 import com.company.kunuz.Profile.entity.ProfileEntity;
 import com.company.kunuz.Profile.repository.ProfileRepository;
+import com.company.kunuz.util.SpringSecurityUtil;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -53,6 +56,22 @@ public class ProfileService {
 
         return page1;
     }
+
+    public boolean updateDetail(UpdateProfileDetailDTO requestDTO) {
+        ProfileEntity profile = getById(SpringSecurityUtil.getCurrentUserId());
+        if (profile == null) {
+            throw new AppBadException("Profile not found");
+        }
+        profile.setName(requestDTO.getName());
+        profile.setSurname(requestDTO.getSurname());
+        profileRepository.save(profile);
+        return true;
+    }
+
+    private ProfileEntity getById(Integer currentUserId) {
+        return profileRepository.findById(currentUserId).orElse(null);
+    }
+
 
     public Integer deleted(Integer id) {
         return profileRepository.deleted(id);

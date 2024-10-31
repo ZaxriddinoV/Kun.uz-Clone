@@ -21,16 +21,9 @@ public class ArticleTypeController {
     private ArticleTypeService articleTypeService;
 
     @PostMapping("/")
-    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleTypeDTO articleTypeDTO1,
-                                        @RequestHeader("Authorization") String token) {
-        System.out.println(token);
-        JwtDTO dto = JwtUtil.decode(token.substring(7));
-        if (dto.getRole().equals(ProfileRole.ADMIN)) {
-            ArticleTypeDTO articleTypeDTO = articleTypeService.create(articleTypeDTO1);
-            return ResponseEntity.ok(articleTypeDTO);
-        } else {
-            return ResponseEntity.status(403).build();
-        }
+    public ResponseEntity<?> addArticle(@Valid @RequestBody ArticleTypeDTO articleTypeDTO1) {
+        ArticleTypeDTO articleTypeDTO = articleTypeService.create(articleTypeDTO1);
+        return ResponseEntity.ok(articleTypeDTO);
     }
 
     @PutMapping("/{id}")

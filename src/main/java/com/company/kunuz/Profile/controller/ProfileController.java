@@ -3,6 +3,7 @@ package com.company.kunuz.Profile.controller;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.JwtDTO;
 import com.company.kunuz.Profile.dto.ProfileDTO;
+import com.company.kunuz.Profile.dto.UpdateProfileDetailDTO;
 import com.company.kunuz.Profile.enums.ProfileRole;
 import com.company.kunuz.Profile.service.ProfileService;
 import com.company.kunuz.util.JwtUtil;
@@ -52,6 +53,12 @@ public class ProfileController {
             return ResponseEntity.status(403).build();
         }
     }
+
+    @PutMapping("/detail")
+    public ResponseEntity<Boolean> updateDetail(@RequestBody @Valid UpdateProfileDetailDTO requestDTO) {
+        return ResponseEntity.ok().body(service.updateDetail(requestDTO));
+    }
+
 
     @ExceptionHandler(AppBadException.class)
     public ResponseEntity<?> handle(AppBadException e) {

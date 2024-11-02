@@ -72,7 +72,6 @@ public class ProfileService {
         return profileRepository.findById(currentUserId).orElse(null);
     }
 
-
     public Integer deleted(Integer id) {
         return profileRepository.deleted(id);
     }

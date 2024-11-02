@@ -15,8 +15,22 @@ import java.util.Map;
 public class JwtUtil {
 
     private static final int tokenLiveTime = 1000 * 3600 * 24; // 1-day
+    private static final int refreshTokenLiveTime = 1000 * 3600 * 24 * 30; // 30 days
     private static final String secretKey = "veryLongSecretmazgillattayevlasharaaxmojonjinnijonsurbetbekkiydirhonuxlatdibekloxovdangasabekochkozjonduxovmashaynikmaydagapchishularnioqiganbolsangizgapyoqaniqsizmazgi";
 
+    public static String generateRefreshToken(String username) {
+        Map<String, Object> extraClaims = new HashMap<>();
+        extraClaims.put("type", "refresh");
+
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(username)
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + refreshTokenLiveTime))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
     public static String encode(String username, String role) {
         Map<String, Object> extraClaims = new HashMap<>();
         extraClaims.put("role", role);
@@ -38,9 +52,12 @@ public class JwtUtil {
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
-        String username = (String) claims.get("username");
-        String role = (String) claims.get("role");
-        return new JwtDTO(username, role);
+
+        String username = claims.getSubject();
+        String role = claims.containsKey("role") ? (String) claims.get("role") : null;
+        String type = (String) claims.get("type"); // token turi (access yoki refresh)
+
+        return new JwtDTO(username, role, type);
     }
 
 

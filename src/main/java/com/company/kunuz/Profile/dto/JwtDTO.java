@@ -12,4 +12,5 @@ import lombok.Setter;
 public class JwtDTO {
     private String username;
     private String role;
+    private String type;
 }

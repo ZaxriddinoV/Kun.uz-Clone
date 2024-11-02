@@ -45,11 +45,13 @@ public class CategoryController {
         return ResponseEntity.ok(list);
     }
 
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/{language}")
     public ResponseEntity<?> getAllCategoryByLanguage(@PathVariable String language) {
         List<CategoryLanguageDTO> dtos = categoryService.getAllByLanguage(language);
         return ResponseEntity.ok(dtos);
     }
+    @PreAuthorize("hasAnyRole('ADMIN')")
     @GetMapping("/language")
     public ResponseEntity<?> getAllCategoryByLanguageHeadr(@RequestHeader(value = "Accept-Language",defaultValue = "ozbek") String language) {
         List<CategoryLanguageDTO> dtos = categoryService.getAllByLanguage(language);

@@ -31,6 +31,7 @@ public class ProfileDTO {
     private ProfileStatus status;
     private ProfileRole role;
     private String JwtToken;
+    private String refreshToken;
 
 
     public ProfileEntity mapToEntity() {

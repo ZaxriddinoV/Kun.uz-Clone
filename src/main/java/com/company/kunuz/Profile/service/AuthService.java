@@ -9,6 +9,7 @@ import com.company.kunuz.Profile.enums.ProfileRole;
 import com.company.kunuz.Profile.enums.ProfileStatus;
 import com.company.kunuz.Profile.enums.UsernameEnum;
 import com.company.kunuz.Profile.repository.ProfileRepository;
+import com.company.kunuz.SecurityConfig.config.CustomUserDetails;
 import com.company.kunuz.UsernameHistory.dto.SmsConfirmDTO;
 import com.company.kunuz.UsernameHistory.entiy.SmsHistoryEntity;
 import com.company.kunuz.UsernameHistory.repository.SmsHistoryRepository;
@@ -20,6 +21,11 @@ import com.company.kunuz.util.JwtUtil;
 import com.company.kunuz.util.MD5Util;
 import com.company.kunuz.util.UsernameValidationUtil;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.time.Duration;
@@ -41,6 +47,8 @@ public class AuthService {
     SmsHistoryService historyService;
     @Autowired
     SmsHistoryRepository smsHistoryRepository;
+    @Autowired
+    AuthenticationManager authenticationManager;
 
     public String registration(RegistrationDTO dto) {
         Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
@@ -122,24 +130,54 @@ public class AuthService {
         }
     }
 
+//    public ProfileDTO login(AuthDTO dto) {
+//        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
+//        if (optional.isEmpty()) {
+//            throw new AppBadException("Email or Password wrong");
+//        }
+//        ProfileEntity entity = optional.get();
+//        if (!entity.getPassword().equals(MD5Util.md5(dto.getPassword()))) {
+//            throw new AppBadException("Email or Password wrong");
+//        }
+//        if (!entity.getStatus().equals(ProfileStatus.ACTIVE)) {
+//            throw new AppBadException("User Not Active");
+//        }
+//        ProfileDTO profileDTO = new ProfileDTO();
+//        profileDTO.setName(entity.getName());
+//        profileDTO.setSurname(entity.getSurname());
+//        profileDTO.setUsername(entity.getUsername());
+//        profileDTO.setRole(entity.getRole());
+//        profileDTO.setJwtToken(JwtUtil.encode(entity.getUsername(), entity.getRole().toString()));
+//        return profileDTO;
+//    }
+
     public ProfileDTO login(AuthDTO dto) {
-        Optional<ProfileEntity> optional = profileRepository.findByUsernameAndVisibleTrue(dto.getUsername());
-        if (optional.isEmpty()) {
-            throw new AppBadException("Email or Password wrong");
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(dto.getUsername(), dto.getPassword())
+            );
+
+            if (authentication.isAuthenticated()) {
+                CustomUserDetails profile = (CustomUserDetails) authentication.getPrincipal();
+
+                ProfileDTO profileDTO = new ProfileDTO();
+                profileDTO.setName(profile.getName());
+                profileDTO.setSurname(profile.getSurname());
+                profileDTO.setUsername(profile.getEmail());
+                profileDTO.setRole(profile.getRole());
+
+                String accessToken = JwtUtil.encode(profile.getEmail(), profile.getRole().toString());
+                String refreshToken = JwtUtil.generateRefreshToken(profile.getEmail());
+                profileDTO.setJwtToken(accessToken);
+                profileDTO.setRefreshToken(refreshToken);
+
+                return profileDTO;
+            }
+        } catch (BadCredentialsException e) {
+            throw new UsernameNotFoundException("Phone or password wrong");
         }
-        ProfileEntity entity = optional.get();
-        if (!entity.getPassword().equals(MD5Util.md5(dto.getPassword()))) {
-            throw new AppBadException("Email or Password wrong");
-        }
-        if (!entity.getStatus().equals(ProfileStatus.ACTIVE)) {
-            throw new AppBadException("User Not Active");
-        }
-        ProfileDTO profileDTO = new ProfileDTO();
-        profileDTO.setName(entity.getName());
-        profileDTO.setSurname(entity.getSurname());
-        profileDTO.setUsername(entity.getUsername());
-        profileDTO.setRole(entity.getRole());
-        profileDTO.setJwtToken(JwtUtil.encode(entity.getUsername(), entity.getRole().toString()));
-        return profileDTO;
+        throw new UsernameNotFoundException("Phone or password wrong");
     }
+
+
 }

@@ -39,6 +39,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String token = header.substring(7).trim();
             JwtDTO dto = JwtUtil.decode(token);
 
+            if (!"access".equals(dto.getType())) {
+                filterChain.doFilter(request, response);
+                return;
+            }
+
             String email = dto.getUsername();
             UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 

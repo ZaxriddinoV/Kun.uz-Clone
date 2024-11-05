@@ -5,8 +5,10 @@ import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Attach.repository.AttachRepository;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.data.domain.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -15,12 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Calendar;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 @Service
 public class AttachService {
@@ -115,6 +116,36 @@ public class AttachService {
         return optional.get();
     }
 
+    public Page<AttachEntity> allAttaches(int page, int size) {
+        PageRequest pageRequest = PageRequest.of(page, size, Sort.by("createdDate").descending());
 
+        Page<AttachEntity> entityList = attachRepository.allAttach(pageRequest);
+        Long total = entityList.getTotalElements();
+        List<AttachDTO> dtoList = new LinkedList<>();
+        for (AttachEntity entity : entityList) {
+            dtoList.add(toDTO(entity));
+        }
+        PageImpl page1 = new PageImpl<>(dtoList, pageRequest, total);
+
+        return page1;
+    }
+
+
+    public Resource download(String fileName) {
+        try {
+            AttachEntity entity = getEntity(fileName);
+            String path = folderName + "/" + entity.getPath() + "/" + entity.getId();
+            Path file = Paths.get(path);
+            Resource resource = new UrlResource(file.toUri());
+            if (resource.exists() || resource.isReadable()) {
+                return resource;
+            } else {
+                throw new AppBadException("File not found");
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 }
 

@@ -39,5 +39,10 @@ public class ExceptionHandlerController extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(body, headers, status);
 
     }
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<?> handle(RuntimeException e) {
+        e.printStackTrace();
+        return ResponseEntity.badRequest().body(e.getMessage());
+    }
 
 }

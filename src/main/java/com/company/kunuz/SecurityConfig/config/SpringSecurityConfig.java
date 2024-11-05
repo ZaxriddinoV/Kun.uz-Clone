@@ -46,6 +46,8 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
+                    .requestMatchers(HttpMethod.POST,"/api/attach/upload").permitAll()
+                    .requestMatchers(HttpMethod.GET,"api/attach/open/**").permitAll()
                     .requestMatchers("/api/email-history/").hasRole("ADMIN")
                     .requestMatchers("/api/email-history/date/").hasRole("ADMIN")
                     .requestMatchers("/api/email-history/email/").hasRole("ADMIN")
@@ -65,7 +67,7 @@ public class SpringSecurityConfig {
         http.csrf(AbstractHttpConfigurer::disable);
 //        http.cors(Customizer.withDefaults());
 
-        http.cors(httpSecurityCorsConfigurer -> { // cors konfiguratsiya qilingan
+        http.cors(httpSecurityCorsConfigurer -> {
             CorsConfiguration configuration = new CorsConfiguration();
             configuration.setAllowedOriginPatterns(Arrays.asList("*"));
             configuration.setAllowedMethods(Arrays.asList("*"));

@@ -38,33 +38,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String token = header.substring(7).trim();
 
         try {
-            // Access tokenni dekod qilish va tekshirish
             JwtDTO dto = JwtUtil.decode(token);
 
             String username = dto.getUsername();
             UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
-            // Foydalanuvchini autentifikatsiya qilish
             UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                     userDetails, null, userDetails.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (ExpiredJwtException e) {
-            // Agar access token muddati tugagan bo'lsa, refresh token yordamida yangilash
             String refreshToken = request.getHeader("Refresh-Token");
 
             if (refreshToken != null) {
                 try {
                     JwtDTO refreshDto = JwtUtil.decode(refreshToken);
 
-                    // Refresh token orqali yangi access token yaratish
                     if ("refresh".equals(refreshDto.getType())) {
                         String newAccessToken = JwtUtil.encode(refreshDto.getUsername(), refreshDto.getRole());
 
-                        // Javobga yangi access tokenni qo'shish
                         response.setHeader("New-Access-Token", newAccessToken);
 
-                        // Foydalanuvchini autentifikatsiya qilish
                         UserDetails userDetails = userDetailsService.loadUserByUsername(refreshDto.getUsername());
                         UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                                 userDetails, null, userDetails.getAuthorities());

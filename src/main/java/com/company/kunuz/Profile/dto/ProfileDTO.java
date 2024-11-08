@@ -1,5 +1,6 @@
 package com.company.kunuz.Profile.dto;
 
+import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Profile.entity.ProfileEntity;
 import com.company.kunuz.Profile.enums.ProfileRole;
 import com.company.kunuz.Profile.enums.ProfileStatus;
@@ -28,6 +29,7 @@ public class ProfileDTO {
     private String username;
     @NotBlank(message = "Password not found")
     private String password;
+    private AttachEntity photo;
     private ProfileStatus status;
     private ProfileRole role;
     private String JwtToken;

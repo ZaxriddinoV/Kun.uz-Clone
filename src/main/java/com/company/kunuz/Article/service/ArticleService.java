@@ -72,4 +72,15 @@ public class ArticleService {
             repository.changeStatusNotPublisher(id);
         }
     }
+
+    public List<ArticleEntity> getArticle5Info(List<Integer> id) {
+        boolean b = articleTypeRepository.existsByIdIn(id);
+        if (b){
+            List<ArticleEntity> entityList = repository.findTop5ByArticle_type_idOrderByPublishedDateDesc(id);
+            if (entityList.isEmpty()) throw new AppBadException("No articles found");
+            else return entityList;
+        }
+
+        return null;
+    }
 }

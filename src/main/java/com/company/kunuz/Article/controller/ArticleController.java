@@ -1,6 +1,7 @@
 package com.company.kunuz.Article.controller;
 
 import com.company.kunuz.Article.dto.ArticleDTO;
+import com.company.kunuz.Article.entity.ArticleEntity;
 import com.company.kunuz.Article.enums.ArticleStatus;
 import com.company.kunuz.Article.service.ArticleService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -37,6 +39,12 @@ public class ArticleController {
     public ResponseEntity<?> update(@PathVariable UUID id, @RequestHeader(value = "Accept-Post",defaultValue = "NotPublished" ) ArticleStatus status){
         service.changeStatus(id, status);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/type/info/")
+    public ResponseEntity<?> getArticleShortInfo(@RequestBody List<Integer> type){
+        List<ArticleEntity> articleDTO =   service.getArticle5Info(type);
+        return ResponseEntity.ok(articleDTO);
     }
 
 

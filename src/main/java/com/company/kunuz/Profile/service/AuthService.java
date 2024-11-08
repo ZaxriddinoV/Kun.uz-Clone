@@ -1,5 +1,6 @@
 package com.company.kunuz.Profile.service;
 
+import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.ExceptionHandler.AppBadException;
 import com.company.kunuz.Profile.dto.AuthDTO;
 import com.company.kunuz.Profile.dto.ProfileDTO;
@@ -165,11 +166,14 @@ public class AuthService {
                 profileDTO.setSurname(profile.getSurname());
                 profileDTO.setUsername(profile.getEmail());
                 profileDTO.setRole(profile.getRole());
+                AttachEntity attachEntity = new AttachEntity();
+
 
                 String accessToken = JwtUtil.encode(profile.getEmail(), profile.getRole().toString());
                 String refreshToken = JwtUtil.generateRefreshToken(profile.getEmail());
                 profileDTO.setJwtToken(accessToken);
                 profileDTO.setRefreshToken(refreshToken);
+
 
                 return profileDTO;
             }

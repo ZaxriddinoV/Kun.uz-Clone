@@ -64,6 +64,7 @@ public class ProfileService {
         }
         profile.setName(requestDTO.getName());
         profile.setSurname(requestDTO.getSurname());
+        profile.setPhotoId(requestDTO.getPhotoId());
         profileRepository.save(profile);
         return true;
     }

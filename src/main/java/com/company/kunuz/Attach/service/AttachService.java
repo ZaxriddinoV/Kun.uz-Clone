@@ -1,6 +1,7 @@
 package com.company.kunuz.Attach.service;
 
 import com.company.kunuz.Attach.dto.AttachDTO;
+import com.company.kunuz.Attach.dto.DovnloadDTO;
 import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Attach.repository.AttachRepository;
 import com.company.kunuz.ExceptionHandler.AppBadException;
@@ -27,6 +28,7 @@ import java.util.*;
 public class AttachService {
 
     private String folderName = "attaches";
+    private String url = "http://localhost:8080/api/attach/download/";
     @Autowired
     private AttachRepository attachRepository;
 
@@ -81,6 +83,7 @@ public class AttachService {
         attachDTO.setSize(entity.getSize());
         attachDTO.setExtension(entity.getExtension());
         attachDTO.setCreatedData(entity.getCreatedDate());
+        attachDTO.setUrl(url + entity.getId());
         return attachDTO;
     }
 
@@ -131,20 +134,28 @@ public class AttachService {
     }
 
 
-    public Resource download(String fileName) {
+    public DovnloadDTO download(String fileName) {
         try {
             AttachEntity entity = getEntity(fileName);
             String path = folderName + "/" + entity.getPath() + "/" + entity.getId();
             Path file = Paths.get(path);
+            List<DovnloadDTO> dtoList = new LinkedList<>();
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
-                return resource;
+                DovnloadDTO dovnloadDTO = new DovnloadDTO();
+                dovnloadDTO.setName(entity.getOrigenName());
+                dovnloadDTO.setResource(resource);
+                return dovnloadDTO;
             } else {
                 throw new AppBadException("File not found");
             }
         } catch (MalformedURLException e) {
             e.printStackTrace();
         }
+        return null;
+    }
+
+    public AttachDTO getDTO(String attachId) {
         return null;
     }
 }

@@ -1,6 +1,7 @@
 package com.company.kunuz.Attach.Controller;
 
 import com.company.kunuz.Attach.dto.AttachDTO;
+import com.company.kunuz.Attach.dto.DovnloadDTO;
 import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Attach.service.AttachService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
@@ -12,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/attach")
@@ -40,9 +43,9 @@ public class AttachController {
 
     @GetMapping("/download/{fileName}")
     public ResponseEntity<Resource> download(@PathVariable("fileName") String fileName) {
-        Resource resource = attachService.download(fileName);
+        DovnloadDTO download = attachService.download(fileName);
         return ResponseEntity.ok().header(HttpHeaders.CONTENT_DISPOSITION,
-                "attachment; filename=\"" + resource.getFilename() + "\"").body(resource);
+                "attachment; filename=\"" + download.getName() + "\"").body(download.getResource());
     }
 
 

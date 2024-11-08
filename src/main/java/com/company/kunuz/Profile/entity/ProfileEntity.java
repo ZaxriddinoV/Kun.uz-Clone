@@ -1,6 +1,7 @@
 package com.company.kunuz.Profile.entity;
 
 
+import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Profile.dto.ProfileDTO;
 import com.company.kunuz.Profile.enums.ProfileRole;
 import com.company.kunuz.Profile.enums.ProfileStatus;
@@ -43,7 +44,10 @@ public class ProfileEntity {
     @Column(name = "created_date")
     private LocalDateTime created_date;
     @Column(name = "photo_id")
-    private Integer photo_id;
+    private String photoId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "photo_id", insertable = false, updatable = false)
+    private AttachEntity photo;
 
 
     public ProfileDTO convertToDTO() {

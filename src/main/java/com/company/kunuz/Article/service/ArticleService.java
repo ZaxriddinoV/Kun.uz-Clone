@@ -83,4 +83,11 @@ public class ArticleService {
 
         return null;
     }
+
+    public ArticleEntity getByArticle(String articleId) {
+        Optional<ArticleEntity> byId = repository.findById(UUID.fromString(articleId));
+        if (byId.isPresent()) {
+            return byId.get();
+        }else return null;
+    }
 }

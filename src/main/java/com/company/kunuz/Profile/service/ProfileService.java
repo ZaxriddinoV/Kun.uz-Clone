@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProfileService {
@@ -71,6 +72,24 @@ public class ProfileService {
 
     private ProfileEntity getById(Integer currentUserId) {
         return profileRepository.findById(currentUserId).orElse(null);
+    }
+
+
+    public ProfileEntity getByIdProfile(Integer id) {
+        ProfileEntity result;
+        Optional<ProfileEntity> byIdAndVisibleTrue = profileRepository.findByIdAndVisibleTrue(id);
+        if (byIdAndVisibleTrue.isPresent()){
+            result = byIdAndVisibleTrue.get();
+        }else {
+            result = null;
+        }
+        return result;
+    }
+    public ProfileEntity getByUsername(String username) {
+        Optional<ProfileEntity> byUsernameAndVisibleTrue = profileRepository.findByUsernameAndVisibleTrue(username);
+        if (byUsernameAndVisibleTrue.isPresent()){
+            return byUsernameAndVisibleTrue.get();
+        }else return null;
     }
 
     public Integer deleted(Integer id) {

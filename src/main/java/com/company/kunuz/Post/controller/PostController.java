@@ -1,33 +1,31 @@
 package com.company.kunuz.Post.controller;
 
 import com.company.kunuz.Post.dto.PostDTO;
-import com.company.kunuz.Post.dto.PostGetDTO;
 import com.company.kunuz.Post.service.PostService;
-import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/post")
+@RequestMapping("/post")
 public class PostController {
-
     @Autowired
     private PostService postService;
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<?> create(@RequestBody PostDTO postDTO) {
-        PostDTO postDTO1 = postService.create(postDTO);
-        return ResponseEntity.ok(postDTO1);
+        PostDTO result = postService.create(postDTO);
+        return ResponseEntity.ok(result);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getById(@PathVariable Integer id) {
-        PostGetDTO byId = postService.getById(id);
-        return ResponseEntity.ok(byId);
+    public PostDTO byId(@PathVariable("id") Integer id) {
+        return postService.getById(id);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable Integer id, @RequestBody PostDTO postDTO) {
-        boolean  b =  postService.update(id,postDTO);
-        return ResponseEntity.ok(b);
+    public Boolean update(@PathVariable("id") Integer id,
+                          @RequestBody PostDTO postDTO) {
+        return postService.update(id, postDTO);
     }
 }

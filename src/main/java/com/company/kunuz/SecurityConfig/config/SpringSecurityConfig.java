@@ -46,6 +46,7 @@ public class SpringSecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> {
             authorizationManagerRequestMatcherRegistry
+                    .requestMatchers("/api/comment/**").permitAll()
                     .requestMatchers("/api/post/**").permitAll()
                     .requestMatchers("/api/attach/download/*").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/attach/upload").permitAll()

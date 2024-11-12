@@ -7,7 +7,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -18,7 +17,7 @@ public class CommentDTO {
     @NotNull(message = "profile id not null")
     private Integer profileId;
     @NotNull(message = "article id not null")
-    private UUID articleId;
+    private String articleId;
     private String replyId;
     private LocalDateTime updateDate;
     private LocalDateTime createdDate;

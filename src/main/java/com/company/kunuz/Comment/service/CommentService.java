@@ -65,7 +65,7 @@ public class CommentService {
         return null;
     }
 
-    public List<CommentDTO> getArticleId(UUID id) {
+    public List<CommentDTO> getArticleId(String id) {
         List<CommentEntity> allByArticleId = commentRepository.findAllByArticleId(id);
         if (allByArticleId.isEmpty()) throw new AppBadException("Article not found");
         List<CommentDTO> list = new ArrayList<>();

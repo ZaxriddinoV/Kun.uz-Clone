@@ -17,8 +17,8 @@ public interface ArticleTypeRepository extends JpaRepository<ArticleTypeEntity, 
     @Query("FROM ArticleTypeEntity s")
     Page<ArticleTypeEntity> findByAll(Pageable pageable);
 
-    @Query("SELECT COUNT(a) > 0 FROM ArticleTypeEntity a WHERE a.id IN :ids")
-    boolean existsByIdIn(@Param("ids") List<Integer> ids);
+    @Query("SELECT COUNT(a) > 0 FROM ArticleTypeEntity a WHERE a.id = :id")
+    boolean existsById(@Param("id") Integer id);
 
 
 }

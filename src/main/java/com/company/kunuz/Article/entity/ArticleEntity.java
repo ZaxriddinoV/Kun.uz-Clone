@@ -1,7 +1,9 @@
 package com.company.kunuz.Article.entity;
 
 import com.company.kunuz.Article.enums.ArticleStatus;
+import com.company.kunuz.Attach.entity.AttachEntity;
 import com.company.kunuz.Category.entity.CategoryEntity;
+import com.company.kunuz.Profile.entity.ProfileEntity;
 import com.company.kunuz.Region.entity.RegionEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -12,8 +14,6 @@ import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.UUID;
-
 @Getter
 @Setter
 @SuperBuilder
@@ -24,31 +24,54 @@ import java.util.UUID;
 public class ArticleEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    private String id;
 
     @Column(name = "title")
     private String title;
     @Column(name = "description")
     private String description;
-    @Column(name = "content")
+    @Column(name = "content",columnDefinition = "TEXT")
     private String content;
     @Column(name = "shared_count")
     private Integer shared_count;
+
     @Column(name = "image_id")
-    private Integer image_id;
-    @ManyToOne
-    private RegionEntity region_id;
-    @ManyToOne
-    private CategoryEntity category_id;
+    private String imageId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "image_id", updatable = false, insertable = false)
+    private AttachEntity image;
+
+    @Column(name = "region_id")
+    private Integer regionId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "region_id",updatable = false, insertable = false)
+    private RegionEntity region;
+
+    @Column(name = "category_id")
+    private Integer categoryId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", updatable = false, insertable = false)
+    private CategoryEntity category;
+
     @OneToMany
     private List<ArticleTypeEntity> article_type_id;
     @Column(name = "moderator_id")
-    private Integer moderator_id;
+
+    private Integer moderatorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "moderator_id", updatable = false, insertable = false)
+    private ProfileEntity moderator;
+
     @Column(name = "publisher_id")
-    private Integer publisher_id;
+    private Integer publisherId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "publisher_id", updatable = false, insertable = false)
+    private ProfileEntity publisher;
+
     @Column(name = "status")
     @Enumerated(EnumType.STRING)
     private ArticleStatus status = ArticleStatus.NotPublished;
+
     @Column(name = "created_date")
     private LocalDateTime created_date;
     @Column(name = "published_date")

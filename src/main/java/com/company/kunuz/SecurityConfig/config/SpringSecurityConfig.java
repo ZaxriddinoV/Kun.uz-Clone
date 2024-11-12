@@ -22,7 +22,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.util.Arrays;
-import java.util.UUID;
 
 @Configuration
 @EnableWebSecurity
@@ -51,18 +50,9 @@ public class SpringSecurityConfig {
                     .requestMatchers("/api/attach/download/*").permitAll()
                     .requestMatchers(HttpMethod.POST,"/api/attach/upload").permitAll()
                     .requestMatchers(HttpMethod.GET,"api/attach/open/**").permitAll()
-                    .requestMatchers("/api/email-history/").hasRole("ADMIN")
-                    .requestMatchers("/api/email-history/date/").hasRole("ADMIN")
-                    .requestMatchers("/api/email-history/email/").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.POST, "/api/auth/registration").permitAll()
                     .requestMatchers(HttpMethod.POST, "/api/auth/login").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/profile/").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.GET, "/api/category/**").permitAll()
-                    .requestMatchers(HttpMethod.POST, "/api/category/**").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/api/category/").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/api/article-type/").hasRole("ADMIN")
-                    .requestMatchers(HttpMethod.PUT, "/api/article/").hasRole("Published")
-                    .requestMatchers(HttpMethod.DELETE, "/api/category/**").hasRole("ADMIN")
+                    .requestMatchers("/api/article/**").permitAll()
                     .anyRequest()
                     .authenticated();
         }).addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);

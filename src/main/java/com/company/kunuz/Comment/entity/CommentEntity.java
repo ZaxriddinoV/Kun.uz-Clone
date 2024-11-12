@@ -7,7 +7,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.UUID;
 
 @Getter
 @Setter
@@ -36,7 +35,7 @@ public class CommentEntity {
     * Join Article id
     * */
     @Column(name = "article_id", columnDefinition = "TEXT")
-    private UUID articleId;
+    private String articleId;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "article_id", insertable = false, updatable = false)
     private ArticleEntity article;

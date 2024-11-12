@@ -13,8 +13,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
-
 @RestController
 @RequestMapping("/api/comment")
 public class CommentController {
@@ -35,7 +33,7 @@ public class CommentController {
     }
 //  Get Article Comment List By Article Id
     @GetMapping("/article/{id}")
-    public ResponseEntity<?> getArticle(@PathVariable UUID id){
+    public ResponseEntity<?> getArticle(@PathVariable String id){
         List<CommentDTO> commentDTOS = service.getArticleId(id);
         return ResponseEntity.ok(commentDTOS);
     }
@@ -48,6 +46,7 @@ public class CommentController {
         Page<CommentAllDTO> dtoPage = service.getAllComment(page - 1,size);
         return ResponseEntity.ok(dtoPage);
     }
+
 
 
 }

@@ -37,8 +37,8 @@ public interface ArticleRepository extends JpaRepository<ArticleEntity,String>, 
     @Query("FROM ArticleEntity a WHERE a.id IN :ids ORDER BY a.published_date DESC")
     List<ArticleEntity> findTop5ByArticle_type_idOrderByPublishedDateDesc(@Param("ids") List<Integer> ids);
 
-    @Query("FROM ArticleEntity a WHERE a.id NOT IN :ids AND a.article_type_id = :articleTypeId ORDER BY a.published_date DESC")
-    List<ArticleEntity> findArticlesExcludingIds(@Param("ids") List<String> ids, @Param("articleTypeId") Integer articleTypeId, Pageable pageable);
+//    @Query("FROM ArticleEntity a WHERE a.id NOT IN :ids AND a.article_type_id = :articleTypeId ORDER BY a.published_date DESC")
+//    List<ArticleEntity> findArticlesExcludingIds(@Param("ids") List<String> ids, @Param("articleTypeId") Integer articleTypeId, Pageable pageable);
 
 
     @Query(" select a.id as id,  a.title as title, a.description as description, a.imageId as imageId, a.published_date as publishedDate " +

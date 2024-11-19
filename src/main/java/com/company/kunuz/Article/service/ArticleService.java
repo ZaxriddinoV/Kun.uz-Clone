@@ -93,20 +93,20 @@ public class ArticleService {
             return mapperList.stream().map(item -> toShortInfo(item)).toList();
         }
         boolean b = articleTypeRepository.existsById(dto.getType());
-        if (b) {
-            List<ArticleShortInfoDTO> ArticleShortInfoDTO = new ArrayList<>();
-            List<ArticleEntity> entityList = repository.findArticlesExcludingIds(dto.getIds(),dto.getType(),PageRequest.of(0, dto.getNumber()));
-            for (ArticleEntity entity : entityList) {
-                ArticleShortInfoDTO articleShortInfoDTO = new ArticleShortInfoDTO();
-                articleShortInfoDTO.setId(entity.getId());
-                articleShortInfoDTO.setTitle(entity.getTitle());
-                articleShortInfoDTO.setDescription(entity.getDescription());
-                articleShortInfoDTO.setImage(entity.getImageId());
-                articleShortInfoDTO.setPublishedDate(entity.getPublished_date());
-                ArticleShortInfoDTO.add(articleShortInfoDTO);
-            }
-            return ArticleShortInfoDTO;
-        }
+//        if (b) {
+//            List<ArticleShortInfoDTO> ArticleShortInfoDTO = new ArrayList<>();
+//            List<ArticleEntity> entityList = repository.findArticlesExcludingIds(dto.getIds(),dto.getType(),PageRequest.of(0, dto.getNumber()));
+//            for (ArticleEntity entity : entityList) {
+//                ArticleShortInfoDTO articleShortInfoDTO = new ArticleShortInfoDTO();
+//                articleShortInfoDTO.setId(entity.getId());
+//                articleShortInfoDTO.setTitle(entity.getTitle());
+//                articleShortInfoDTO.setDescription(entity.getDescription());
+//                articleShortInfoDTO.setImage(entity.getImageId());
+//                articleShortInfoDTO.setPublishedDate(entity.getPublished_date());
+//                ArticleShortInfoDTO.add(articleShortInfoDTO);
+//            }
+//            return ArticleShortInfoDTO;
+//        }
         return null;
     }
 
@@ -171,4 +171,7 @@ public class ArticleService {
         return dto;
     }
 
+    public ArticleDTO getById(String id, String userIP) {
+        return null;
+    }
 }

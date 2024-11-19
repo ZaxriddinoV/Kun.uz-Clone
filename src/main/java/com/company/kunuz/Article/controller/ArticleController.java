@@ -3,10 +3,11 @@ package com.company.kunuz.Article.controller;
 import com.company.kunuz.Article.dto.ArticleDTO;
 import com.company.kunuz.Article.dto.ArticleInfoDTO;
 import com.company.kunuz.Article.dto.ArticleShortInfoDTO;
-import com.company.kunuz.Article.entity.ArticleEntity;
 import com.company.kunuz.Article.enums.ArticleStatus;
 import com.company.kunuz.Article.service.ArticleService;
 import com.company.kunuz.ExceptionHandler.AppBadException;
+import com.company.kunuz.util.HeaderUtil;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -14,7 +15,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -61,12 +61,20 @@ public class ArticleController {
 
     // Category id
     @GetMapping("/category/{id}")
-    public ResponseEntity<?> getArticleRegion(@RequestParam(value = "page", defaultValue = "1") int page,
+    public ResponseEntity<?> getArticleCategory(@RequestParam(value = "page", defaultValue = "1") int page,
                                               @RequestParam(value = "size", defaultValue = "10") int size,
                                               @PathVariable Integer id) {
         Page<ArticleShortInfoDTO> articleShortInfoDTOS = service.ByCategoryId(id, page - 1, size);
         return ResponseEntity.ok(articleShortInfoDTOS);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<ArticleDTO> byId(@PathVariable("id") String id, HttpServletRequest request){
+        ArticleDTO byId = service.getById(id, HeaderUtil.getUserIP(request));
+        return ResponseEntity.ok().build();
+    }
+
+
+
 
 
 
